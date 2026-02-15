@@ -2,151 +2,278 @@
 
 ## Introduction
 
-CHAPS (Community Health Agent for Post-Surgery Recovery) is an agentic, offline-first post-surgery recovery system designed for patients in India who often miss post-surgery follow-ups due to limited access to healthcare facilities, low awareness of recovery protocols, and unreliable internet connectivity. The system continuously monitors patient recovery, provides adaptive interventions, and escalates care when needed while operating effectively in resource-constrained environments.
+CHAPS (Continuous Health Alert and Pattern System) is an autonomous healthcare monitoring system designed to solve a life-or-death problem: healthcare delays caused by missed observation and internet dependency cost lives. The fundamental challenge is that humans cannot observe patients continuously, leading to missed critical changes in patient condition.
+
+The system provides 24/7 continuous observation through behavioral pattern recognition, combining non-intrusive camera/sensor monitoring with wearable device data. It detects clinically meaningful changes early and escalates emergencies instantly without internet dependency. CHAPS is universally applicable across hospitals, homes, and elderly care facilities—anywhere continuous patient observation is critical for safety.
 
 ## Glossary
 
-- **CHAPS_System**: The Community Health Agent for Post-Surgery Recovery system
-- **Patient**: Individual recovering from surgery who uses the system for monitoring and guidance
-- **Caregiver**: Family member or friend designated to assist with patient recovery
-- **ASHA_Worker**: Accredited Social Health Activist, a community health worker in India
-- **Clinician**: Healthcare professional (doctor, nurse) overseeing patient care
-- **Recovery_Signal**: Measurable indicator of patient recovery status (pain level, mobility, medication adherence)
-- **Intervention**: System-generated action to support recovery (reminder, alert, escalation)
-- **Risk_Threshold**: Predefined criteria that trigger escalation to human oversight
-- **Audit_Log**: Explainable record of system decisions and actions
-- **Dashboard**: Web interface for healthcare providers to monitor patients
-- **Offline_Mode**: System operation without internet connectivity
-- **SMS_Gateway**: Service for sending text messages
-- **IVR_System**: Interactive Voice Response system for voice-based interactions
+- **CHAPS_System**: The Continuous Health Alert and Pattern System
+- **Patient**: Individual being monitored (post-surgery, elderly, high-risk)
+- **Observation_System**: Non-intrusive camera/sensor infrastructure for behavioral monitoring
+- **Wearable_Device**: Simple band measuring heart rate, motion, and emergency button
+- **Behavioral_Pattern**: Clinically meaningful pattern (movement, sleep, restlessness, inactivity)
+- **Pattern_Signal**: Processed observation data sent to AI (no surveillance recording)
+- **Observation_Agent**: AI agent processing camera/sensor and wearable data
+- **Pattern_Analysis_Agent**: AI agent detecting abnormal behavioral patterns
+- **Escalation_Agent**: AI agent managing emergency-first escalation protocol
+- **Audit_Agent**: AI agent logging all observations and decisions with rationale
+- **Emergency_Escalation**: Critical alert using SMS/IVR (no internet dependency)
+- **Caregiver**: Family member, nurse, or designated care provider
+- **Clinician**: Doctor or healthcare professional
+- **SMS_Alert**: Text message emergency notification via cellular network
+- **IVR_Call**: Automated voice call emergency notification via cellular network
+- **Escalation_Protocol**: Step-by-step emergency notification sequence
+- **Recovery_Baseline**: Normal behavioral patterns established for patient
 
 ## Requirements
 
-### Requirement 1: Patient Recovery Monitoring
+### Requirement 1: Continuous Behavioral Observation
 
-**User Story:** As a patient, I want the system to track my recovery progress, so that I can receive appropriate support and interventions during my post-surgery recovery.
-
-#### Acceptance Criteria
-
-1. WHEN a patient reports pain levels, THE CHAPS_System SHALL record the pain score with timestamp
-2. WHEN a patient reports mobility status, THE CHAPS_System SHALL log mobility metrics and compare against recovery milestones
-3. WHEN a patient confirms medication intake, THE CHAPS_System SHALL update adherence tracking
-4. WHEN a patient misses a medication reminder, THE CHAPS_System SHALL record the missed dose and adjust future reminder timing
-5. THE CHAPS_System SHALL store all Recovery_Signals locally for offline operation
-
-### Requirement 2: Adaptive Reminder System
-
-**User Story:** As a patient, I want to receive personalized reminders that adapt to my behavior patterns, so that I can maintain proper medication adherence and recovery protocols.
+**User Story:** As a healthcare provider, I want continuous 24/7 observation of patient behavioral patterns, so that I can detect abnormal changes early without requiring constant human monitoring.
 
 #### Acceptance Criteria
 
-1. WHEN medication adherence drops below 80%, THE CHAPS_System SHALL increase reminder frequency
-2. WHEN a patient consistently responds to reminders at specific times, THE CHAPS_System SHALL optimize reminder timing to match patient patterns
-3. WHERE SMS delivery fails, THE CHAPS_System SHALL attempt IVR_System delivery as fallback
-4. WHEN a patient demonstrates good adherence for 7 consecutive days, THE CHAPS_System SHALL reduce reminder intensity
-5. THE CHAPS_System SHALL generate reminders in local language preferences
+1. THE Observation_System SHALL monitor patients continuously without interruption
+2. WHEN observing patient behavior, THE Observation_System SHALL process visual/sensor data into Pattern_Signals without recording surveillance footage
+3. THE Observation_System SHALL send Pattern_Signals to the Observation_Agent for analysis
+4. THE Observation_System SHALL operate in hospitals, homes, and elderly care facilities
+5. WHEN privacy is required, THE Observation_System SHALL process data locally without external transmission
 
-### Requirement 3: Risk Assessment and Escalation
+### Requirement 2: Movement Pattern Detection
 
-**User Story:** As a clinician, I want the system to automatically escalate high-risk patients to appropriate caregivers, so that critical recovery issues are addressed promptly.
-
-#### Acceptance Criteria
-
-1. WHEN pain levels exceed threshold for 48 hours, THE CHAPS_System SHALL escalate to designated Caregiver
-2. WHEN medication adherence falls below 60% for 3 consecutive days, THE CHAPS_System SHALL escalate to ASHA_Worker
-3. WHEN multiple Recovery_Signals indicate deterioration, THE CHAPS_System SHALL escalate to Clinician
-4. WHEN escalation is triggered, THE CHAPS_System SHALL send alerts via SMS and IVR_System
-5. THE CHAPS_System SHALL continue escalation attempts until acknowledgment is received
-
-### Requirement 4: Offline-First Operation
-
-**User Story:** As a patient in a resource-constrained setting, I want the system to work without internet connectivity, so that my recovery monitoring continues uninterrupted.
+**User Story:** As a clinician, I want the system to detect abnormal movement patterns, so that I can identify complications, pain, or distress early in recovery.
 
 #### Acceptance Criteria
 
-1. THE CHAPS_System SHALL operate fully in Offline_Mode for up to 7 days
-2. WHEN internet connectivity is restored, THE CHAPS_System SHALL synchronize all locally stored data
-3. WHEN operating offline, THE CHAPS_System SHALL queue SMS and IVR messages for delivery when connectivity returns
-4. THE CHAPS_System SHALL maintain core functionality without external API dependencies
-5. WHEN storage capacity reaches 90%, THE CHAPS_System SHALL compress older data while preserving critical Recovery_Signals
+1. WHEN a patient shows reduced movement compared to Recovery_Baseline, THE Pattern_Analysis_Agent SHALL flag potential complications, infection, pain, or weakness
+2. WHEN a patient shows sudden increase in movement (agitation, restlessness), THE Pattern_Analysis_Agent SHALL flag potential discomfort, anxiety, or distress
+3. WHEN a patient shows sudden decrease in movement (fatigue, stillness), THE Pattern_Analysis_Agent SHALL flag potential pain, weakness, or emergency
+4. THE Pattern_Analysis_Agent SHALL establish Recovery_Baseline for each patient within first 24 hours
+5. THE Pattern_Analysis_Agent SHALL compare current movement patterns against Recovery_Baseline continuously
 
-### Requirement 5: Healthcare Provider Dashboard
+### Requirement 3: Sleep Pattern Monitoring
 
-**User Story:** As a clinician, I want a lightweight dashboard to monitor multiple patients and receive actionable recommendations, so that I can efficiently manage post-surgery care.
-
-#### Acceptance Criteria
-
-1. WHEN a Clinician accesses the Dashboard, THE CHAPS_System SHALL display patients ranked by risk level
-2. WHEN displaying patient information, THE CHAPS_System SHALL show current Recovery_Signals and trend analysis
-3. THE CHAPS_System SHALL highlight patients requiring immediate attention with visual indicators
-4. WHEN a patient's status changes significantly, THE CHAPS_System SHALL update Dashboard in real-time
-5. THE CHAPS_System SHALL provide recommended actions for each high-risk patient
-
-### Requirement 6: Audit Trail and Explainability
-
-**User Story:** As a healthcare administrator, I want transparent logs of all system decisions, so that I can understand and validate the system's autonomous actions.
+**User Story:** As a healthcare provider, I want to monitor patient sleep patterns, so that I can detect pain, complications, or medication issues affecting recovery.
 
 #### Acceptance Criteria
 
-1. WHEN the system generates any Intervention, THE CHAPS_System SHALL create an Audit_Log entry explaining the decision rationale
-2. WHEN Risk_Threshold is crossed, THE CHAPS_System SHALL log the specific signals and thresholds that triggered escalation
-3. THE CHAPS_System SHALL maintain Audit_Log entries for minimum 1 year
-4. WHEN requested, THE CHAPS_System SHALL provide human-readable explanations for any automated decision
-5. THE CHAPS_System SHALL ensure Audit_Log integrity through cryptographic signatures
+1. WHEN a patient has abnormal sleep duration compared to Recovery_Baseline, THE Pattern_Analysis_Agent SHALL flag potential complications
+2. WHEN a patient has frequent wake-ups during sleep periods, THE Pattern_Analysis_Agent SHALL flag potential pain or discomfort
+3. WHEN a patient shows long inactivity without sleep indicators, THE Pattern_Analysis_Agent SHALL flag potential weakness or emergency
+4. THE Pattern_Analysis_Agent SHALL distinguish between normal sleep and concerning inactivity
+5. THE Pattern_Analysis_Agent SHALL track sleep quality trends over recovery period
 
-### Requirement 7: Multi-Channel Communication
+### Requirement 4: Restlessness Detection
 
-**User Story:** As a patient with limited technology access, I want to receive communications through multiple channels, so that I can stay connected with my recovery program regardless of device availability.
-
-#### Acceptance Criteria
-
-1. THE CHAPS_System SHALL support SMS_Gateway for text-based communications
-2. THE CHAPS_System SHALL support IVR_System for voice-based interactions
-3. WHEN SMS delivery fails, THE CHAPS_System SHALL automatically retry via IVR_System
-4. THE CHAPS_System SHALL adapt message content based on communication channel capabilities
-5. WHEN both SMS and IVR fail, THE CHAPS_System SHALL log delivery failure and escalate to human intervention
-
-### Requirement 8: Data Privacy and Security
-
-**User Story:** As a patient, I want my health data to be protected and used only for my recovery, so that my privacy is maintained while receiving care.
+**User Story:** As a nurse, I want to detect patient restlessness patterns, so that I can identify pain, breathing difficulty, or discomfort requiring intervention.
 
 #### Acceptance Criteria
 
-1. THE CHAPS_System SHALL encrypt all patient data at rest using AES-256 encryption
-2. THE CHAPS_System SHALL encrypt all data transmissions using TLS 1.3
-3. WHEN accessing patient data, THE CHAPS_System SHALL authenticate and authorize all users
-4. THE CHAPS_System SHALL log all data access attempts with user identification
-5. THE CHAPS_System SHALL automatically anonymize data older than 2 years while preserving research value
+1. WHEN a patient shows repeated position changes, THE Pattern_Analysis_Agent SHALL flag potential pain or discomfort
+2. WHEN a patient shows constant movement without rest periods, THE Pattern_Analysis_Agent SHALL flag potential breathing difficulty or severe discomfort
+3. THE Pattern_Analysis_Agent SHALL distinguish between normal position adjustments and concerning restlessness
+4. WHEN restlessness persists beyond threshold duration, THE Pattern_Analysis_Agent SHALL escalate to Caregiver
+5. THE Pattern_Analysis_Agent SHALL correlate restlessness with other Behavioral_Patterns for comprehensive assessment
 
-### Requirement 9: Pattern-Based Adaptation and Optimization
+### Requirement 5: Inactivity Monitoring
 
-**User Story:** As a user in an area with poor internet connectivity, I want the system to work efficiently with minimal data usage, so that I can use it without worrying about connectivity costs.
-
-#### Acceptance Criteria
-
-1. THE CHAPS_System SHALL compress all data transmissions to minimize bandwidth usage
-2. THE CHAPS_System SHALL prioritize critical data synchronization over non-essential updates
-3. WHEN bandwidth is limited, THE CHAPS_System SHALL operate in reduced-functionality mode
-4. THE CHAPS_System SHALL cache frequently accessed data locally to reduce network requests
-5. THE CHAPS_System SHALL provide data usage statistics to users
-
-### Requirement 10: Multi-Language Support
-
-**User Story:** As a patient who speaks a regional Indian language, I want to interact with the system in my preferred language, so that I can understand and respond to recovery guidance effectively.
+**User Story:** As a caregiver, I want alerts for prolonged patient inactivity, so that I can respond quickly to weakness, fainting, or emergencies.
 
 #### Acceptance Criteria
 
-1. THE CHAPS_System SHALL support Hindi, English, and 5 major regional Indian languages
-2. WHEN a patient selects a language preference, THE CHAPS_System SHALL deliver all communications in that language
-3. THE CHAPS_System SHALL provide voice prompts in IVR_System using native language pronunciation
-4. WHEN translating medical terms, THE CHAPS_System SHALL use culturally appropriate terminology
-5. THE CHAPS_System SHALL allow language switching at any time during system interaction
+1. WHEN a patient shows long periods of no movement, THE Pattern_Analysis_Agent SHALL flag potential weakness or emergency
+2. WHEN a patient misses expected activity check-ins, THE Pattern_Analysis_Agent SHALL escalate immediately
+3. THE Pattern_Analysis_Agent SHALL account for normal sleep periods when assessing inactivity
+4. WHEN inactivity exceeds critical threshold, THE Escalation_Agent SHALL trigger emergency escalation
+5. THE Pattern_Analysis_Agent SHALL adjust inactivity thresholds based on patient mobility baseline
+
+### Requirement 6: Wearable Device Integration
+
+**User Story:** As a nurse, I want continuous vital sign monitoring from wearable devices, so that I can detect deterioration in high-risk and elderly patients without manual checks.
+
+#### Acceptance Criteria
+
+1. THE Wearable_Device SHALL measure heart rate continuously
+2. THE Wearable_Device SHALL detect motion and falls
+3. THE Wearable_Device SHALL provide emergency button for patient-initiated alerts
+4. WHEN the Wearable_Device detects abnormal heart rate, THE Observation_Agent SHALL send Pattern_Signal to Pattern_Analysis_Agent
+5. WHEN the Wearable_Device detects fall or sudden immobility, THE Observation_Agent SHALL trigger immediate emergency escalation
+
+### Requirement 7: Wearable Emergency Detection
+
+**User Story:** As a patient, I want immediate help when I press the emergency button or experience a fall, so that I receive rapid assistance in critical situations.
+
+#### Acceptance Criteria
+
+1. WHEN emergency button is pressed, THE Escalation_Agent SHALL trigger immediate emergency escalation
+2. WHEN a fall is detected, THE Escalation_Agent SHALL trigger immediate emergency escalation
+3. WHEN sudden immobility is detected after normal activity, THE Escalation_Agent SHALL trigger immediate emergency escalation
+4. THE Escalation_Agent SHALL not require internet connectivity for emergency escalation
+5. THE Escalation_Agent SHALL continue escalation attempts until acknowledgment received
+
+### Requirement 8: Emergency-First Escalation Without Internet
+
+**User Story:** As a patient in an emergency, I need alerts to reach caregivers immediately without depending on internet connectivity, so that help arrives quickly regardless of network conditions.
+
+#### Acceptance Criteria
+
+1. THE Escalation_Agent SHALL use SMS_Alert for text-based emergency notifications
+2. THE Escalation_Agent SHALL use IVR_Call for voice-based emergency notifications
+3. THE Escalation_Agent SHALL operate via cellular network without internet dependency
+4. WHEN SMS_Alert fails, THE Escalation_Agent SHALL immediately attempt IVR_Call
+5. THE Escalation_Agent SHALL never depend on Wi-Fi or internet apps for emergency communication
+
+### Requirement 9: Step-by-Step Escalation Protocol
+
+**User Story:** As a healthcare administrator, I want automatic step-by-step escalation of emergencies, so that critical alerts reach the right person even if primary contacts are unavailable.
+
+#### Acceptance Criteria
+
+1. WHEN emergency is detected, THE Escalation_Agent SHALL alert Caregiver first
+2. WHEN Caregiver does not acknowledge within threshold time, THE Escalation_Agent SHALL alert Clinician
+3. WHEN Clinician does not acknowledge within threshold time, THE Escalation_Agent SHALL alert backup contacts
+4. THE Escalation_Agent SHALL continue escalation until acknowledgment is received
+5. THE Escalation_Agent SHALL apply Escalation_Protocol universally across hospitals, homes, and elderly care facilities
+
+### Requirement 10: Multi-Modal Pattern Integration
+
+**User Story:** As a clinician, I want the system to analyze patterns from both observation systems and wearable devices together, so that I get comprehensive assessment of patient condition.
+
+#### Acceptance Criteria
+
+1. THE Pattern_Analysis_Agent SHALL integrate Pattern_Signals from Observation_System and Wearable_Device
+2. WHEN multiple Pattern_Signals indicate deterioration, THE Pattern_Analysis_Agent SHALL increase risk assessment
+3. THE Pattern_Analysis_Agent SHALL correlate behavioral patterns with vital sign data
+4. WHEN conflicting Pattern_Signals are detected, THE Pattern_Analysis_Agent SHALL prioritize wearable vital signs for emergency decisions
+5. THE Pattern_Analysis_Agent SHALL provide unified risk assessment from all data sources
+
+### Requirement 11: Privacy-Preserving Observation
+
+**User Story:** As a patient, I want my privacy protected during continuous observation, so that I feel comfortable with monitoring while maintaining dignity.
+
+#### Acceptance Criteria
+
+1. THE Observation_System SHALL not record surveillance footage
+2. THE Observation_System SHALL process visual data into Pattern_Signals only
+3. THE Observation_System SHALL delete raw visual data immediately after pattern extraction
+4. WHEN processing Pattern_Signals, THE Observation_Agent SHALL maintain patient anonymity in non-emergency contexts
+5. THE Observation_System SHALL provide visual indicator when observation is active
+
+### Requirement 12: Autonomous Agent Decision-Making
+
+**User Story:** As a healthcare provider, I want the AI agents to make autonomous decisions about escalation, so that critical situations are handled immediately without waiting for human review.
+
+#### Acceptance Criteria
+
+1. THE Pattern_Analysis_Agent SHALL autonomously assess risk levels from Behavioral_Patterns
+2. THE Escalation_Agent SHALL autonomously trigger Emergency_Escalation when thresholds are crossed
+3. THE Observation_Agent SHALL autonomously process Pattern_Signals without human intervention
+4. WHEN emergency conditions are detected, THE Escalation_Agent SHALL act immediately without requiring approval
+5. THE Audit_Agent SHALL log all autonomous decisions with explainable rationale
+
+### Requirement 13: Explainable Decision Audit Trail
+
+**User Story:** As a healthcare administrator, I want transparent logs of all AI decisions, so that I can understand why escalations occurred and validate system behavior.
+
+#### Acceptance Criteria
+
+1. WHEN any agent makes a decision, THE Audit_Agent SHALL create log entry with decision rationale
+2. THE Audit_Agent SHALL log which Behavioral_Patterns triggered each escalation
+3. THE Audit_Agent SHALL log which Pattern_Signals contributed to risk assessment
+4. THE Audit_Agent SHALL maintain audit logs for minimum 1 year
+5. WHEN requested, THE Audit_Agent SHALL provide human-readable explanation for any decision
+
+### Requirement 14: Universal Applicability
+
+**User Story:** As a healthcare system administrator, I want the same monitoring system to work in hospitals, homes, and elderly care facilities, so that we have consistent patient safety across all care settings.
+
+#### Acceptance Criteria
+
+1. THE CHAPS_System SHALL operate in hospital post-surgery recovery units
+2. THE CHAPS_System SHALL operate in patient homes for remote recovery monitoring
+3. THE CHAPS_System SHALL operate in elderly care facilities for continuous safety monitoring
+4. THE CHAPS_System SHALL adapt Behavioral_Pattern baselines to different care settings
+5. THE CHAPS_System SHALL use identical Escalation_Protocol across all care settings
+
+### Requirement 15: Early Risk Detection
+
+**User Story:** As a clinician, I want early detection of deteriorating patient conditions, so that I can intervene before situations become critical.
+
+#### Acceptance Criteria
+
+1. WHEN Behavioral_Patterns deviate from Recovery_Baseline, THE Pattern_Analysis_Agent SHALL calculate risk score
+2. WHEN risk score exceeds moderate threshold, THE Pattern_Analysis_Agent SHALL alert Caregiver
+3. WHEN risk score exceeds high threshold, THE Pattern_Analysis_Agent SHALL alert Clinician
+4. WHEN risk score exceeds critical threshold, THE Escalation_Agent SHALL trigger Emergency_Escalation
+5. THE Pattern_Analysis_Agent SHALL detect deterioration trends before they become emergencies
+
+### Requirement 16: Offline Emergency Operation
+
+**User Story:** As a patient in a location with poor connectivity, I want emergency alerts to work without internet, so that I receive help even when networks are unreliable.
+
+#### Acceptance Criteria
+
+1. THE CHAPS_System SHALL operate core observation functions without internet connectivity
+2. THE CHAPS_System SHALL trigger Emergency_Escalation without internet connectivity
+3. THE CHAPS_System SHALL queue non-emergency data for synchronization when connectivity returns
+4. WHEN internet is unavailable, THE Escalation_Agent SHALL use cellular SMS_Alert and IVR_Call exclusively
+5. THE CHAPS_System SHALL maintain local Pattern_Signal processing during offline periods
+
+### Requirement 17: Wearable Device Reliability
+
+**User Story:** As a high-risk patient, I want my wearable device to work reliably, so that emergencies are detected even if I cannot call for help.
+
+#### Acceptance Criteria
+
+1. THE Wearable_Device SHALL have minimum 7-day battery life
+2. WHEN Wearable_Device battery is low, THE Observation_Agent SHALL alert Caregiver
+3. WHEN Wearable_Device loses connection, THE Observation_Agent SHALL alert Caregiver within 5 minutes
+4. THE Wearable_Device SHALL be water-resistant for continuous wear
+5. THE Wearable_Device SHALL have simple one-button emergency activation
+
+### Requirement 18: Real-Time Pattern Analysis
+
+**User Story:** As a nurse, I want immediate alerts when patient patterns become concerning, so that I can respond quickly to prevent complications.
+
+#### Acceptance Criteria
+
+1. THE Pattern_Analysis_Agent SHALL process Pattern_Signals in real-time
+2. WHEN concerning pattern is detected, THE Pattern_Analysis_Agent SHALL generate alert within 30 seconds
+3. WHEN emergency pattern is detected, THE Escalation_Agent SHALL trigger Emergency_Escalation within 10 seconds
+4. THE Pattern_Analysis_Agent SHALL update risk assessments continuously as new Pattern_Signals arrive
+5. THE Pattern_Analysis_Agent SHALL prioritize processing of critical Pattern_Signals over routine monitoring
+
+### Requirement 19: Multi-Language Emergency Communication
+
+**User Story:** As a patient who speaks a regional language, I want emergency communications in my language, so that I understand critical alerts and can respond appropriately.
+
+#### Acceptance Criteria
+
+1. THE Escalation_Agent SHALL deliver SMS_Alert in patient's preferred language
+2. THE Escalation_Agent SHALL deliver IVR_Call in patient's preferred language with native pronunciation
+3. THE CHAPS_System SHALL support Hindi, English, and 5 major regional Indian languages
+4. WHEN language preference is not set, THE Escalation_Agent SHALL use English as fallback
+5. THE Escalation_Agent SHALL use simple, clear language for emergency communications
+
+### Requirement 20: Healthcare Provider Dashboard
+
+**User Story:** As a clinician managing multiple patients, I want a dashboard showing all patients with risk-based prioritization, so that I can focus attention on those who need it most.
+
+#### Acceptance Criteria
+
+1. WHEN Clinician accesses dashboard, THE CHAPS_System SHALL display patients ranked by current risk score
+2. THE CHAPS_System SHALL show current Behavioral_Patterns and trends for each patient
+3. THE CHAPS_System SHALL highlight patients with active alerts or escalations
+4. WHEN patient risk score changes significantly, THE CHAPS_System SHALL update dashboard in real-time
+5. THE CHAPS_System SHALL provide drill-down view for detailed Pattern_Signal history
 
 ## Success Metrics
 
-- Increase in post-surgery medication adherence rates
-- Reduction in missed follow-up cases after discharge
-- Average time taken to escalate high-risk patients
-- Percentage of recovery issues resolved without clinician intervention
-- System availability and reliability in offline and low-connectivity conditions
-- Adoption rate among patients and ASHA workers
+- Reduction in time to detect patient deterioration
+- Reduction in adverse events due to missed observation
+- Percentage of emergencies escalated within target time
+- False positive rate for emergency escalations
+- System uptime and reliability in offline conditions
+- Caregiver response time to escalations
+- Patient safety outcomes across hospital, home, and elderly care settings
