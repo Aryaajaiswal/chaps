@@ -25,6 +25,15 @@ The system provides 24/7 continuous observation through behavioral pattern recog
 - **IVR_Call**: Automated voice call emergency notification via cellular network
 - **Escalation_Protocol**: Step-by-step emergency notification sequence
 - **Recovery_Baseline**: Normal behavioral patterns established for patient
+- **Predictive_Analytics_Agent**: AI agent predicting patient deterioration 6-12 hours in advance
+- **Risk_Trajectory**: Predicted risk score progression over next 6-12 hours
+- **ML_Model**: Machine learning model trained on historical pattern sequences
+- **Voice_Interaction_Module**: Natural voice interface for patient symptom reporting
+- **Speech_Recognition**: Offline voice-to-text processing for patient input
+- **Voice_Command**: Natural language patient input (pain level, symptoms, help requests)
+- **Caregiver_Mobile_App**: Mobile application for caregivers with push notifications
+- **Push_Notification**: Real-time mobile alert with SMS/IVR fallback
+- **Offline_Sync**: Mobile app data synchronization when connectivity available
 
 ## Requirements
 
@@ -277,3 +286,211 @@ The system provides 24/7 continuous observation through behavioral pattern recog
 - System uptime and reliability in offline conditions
 - Caregiver response time to escalations
 - Patient safety outcomes across hospital, home, and elderly care settings
+
+### Requirement 21: Predictive Risk Trajectory Analysis
+
+**User Story:** As a clinician, I want to predict patient deterioration 6-12 hours before it happens, so that I can intervene proactively rather than reactively to prevent emergencies.
+
+#### Acceptance Criteria
+
+1. THE Predictive_Analytics_Agent SHALL analyze historical pattern sequences to predict future risk trajectory
+2. WHEN analyzing patterns, THE Predictive_Analytics_Agent SHALL generate risk predictions for 6-12 hour forecast window
+3. THE Predictive_Analytics_Agent SHALL identify early warning signs before they become emergencies
+4. WHEN risk trajectory indicates likely deterioration, THE Predictive_Analytics_Agent SHALL alert Clinician with predicted timeline
+5. THE Predictive_Analytics_Agent SHALL explain which pattern trends indicate future risk
+
+### Requirement 22: ML Model Training and Accuracy
+
+**User Story:** As a healthcare administrator, I want the predictive model trained on historical data and continuously monitored for accuracy, so that predictions remain reliable over time.
+
+#### Acceptance Criteria
+
+1. THE ML_Model SHALL be trained on anonymized historical pattern data from multiple patients
+2. THE ML_Model SHALL learn correlations between pattern sequences and deterioration events
+3. THE Predictive_Analytics_Agent SHALL monitor ML_Model accuracy continuously
+4. WHEN ML_Model accuracy drops below threshold, THE Predictive_Analytics_Agent SHALL trigger model retraining
+5. THE ML_Model SHALL operate offline without internet dependency
+
+### Requirement 23: Federated Learning for Privacy-Preserving Updates
+
+**User Story:** As a patient, I want my data to contribute to model improvements without compromising my privacy, so that the system gets better while protecting my information.
+
+#### Acceptance Criteria
+
+1. THE Predictive_Analytics_Agent SHALL support federated learning for model updates
+2. WHEN updating ML_Model, THE Predictive_Analytics_Agent SHALL not transmit raw patient data
+3. THE Predictive_Analytics_Agent SHALL aggregate model improvements locally
+4. THE Predictive_Analytics_Agent SHALL synchronize model updates when connectivity available
+5. THE Predictive_Analytics_Agent SHALL maintain patient anonymity during model training
+
+### Requirement 24: Voice-Based Pain Level Reporting
+
+**User Story:** As an elderly patient, I want to report my pain level using voice commands, so that I can communicate my condition without using complex interfaces.
+
+#### Acceptance Criteria
+
+1. THE Voice_Interaction_Module SHALL recognize voice commands for pain level reporting (1-10 scale)
+2. WHEN patient speaks pain level, THE Voice_Interaction_Module SHALL convert speech to Pattern_Signal
+3. THE Voice_Interaction_Module SHALL operate offline using local speech recognition
+4. THE Voice_Interaction_Module SHALL support all 7 languages (Hindi, English, Tamil, Telugu, Bengali, Marathi, Gujarati)
+5. THE Voice_Interaction_Module SHALL provide voice confirmation feedback to patient
+
+### Requirement 25: Voice-Based Symptom Description
+
+**User Story:** As a post-surgery patient, I want to describe symptoms using natural voice commands, so that I can report issues without typing or pressing buttons.
+
+#### Acceptance Criteria
+
+1. THE Voice_Interaction_Module SHALL recognize natural symptom descriptions (pain, nausea, dizziness, breathing difficulty)
+2. WHEN patient describes symptoms, THE Voice_Interaction_Module SHALL extract clinically relevant information
+3. THE Voice_Interaction_Module SHALL send symptom Pattern_Signals to Pattern_Analysis_Agent
+4. THE Voice_Interaction_Module SHALL handle conversational flow naturally without rigid commands
+5. THE Voice_Interaction_Module SHALL filter noise in hospital and home environments
+
+### Requirement 26: Voice Emergency Activation
+
+**User Story:** As a patient in distress, I want to call for help using voice commands, so that I can get assistance even when I cannot reach the emergency button.
+
+#### Acceptance Criteria
+
+1. WHEN patient says emergency phrases ("Help me", "I need help", "Emergency"), THE Voice_Interaction_Module SHALL trigger immediate emergency escalation
+2. THE Voice_Interaction_Module SHALL recognize emergency phrases in all supported languages
+3. THE Voice_Interaction_Module SHALL distinguish emergency requests from normal conversation
+4. THE Voice_Interaction_Module SHALL not require exact phrasing for emergency activation
+5. THE Voice_Interaction_Module SHALL provide immediate voice acknowledgment of emergency activation
+
+### Requirement 27: Voice Data Privacy
+
+**User Story:** As a patient, I want my voice interactions to be processed privately without recording, so that my conversations remain confidential.
+
+#### Acceptance Criteria
+
+1. THE Voice_Interaction_Module SHALL not record voice conversations
+2. THE Voice_Interaction_Module SHALL process voice data into Pattern_Signals only
+3. THE Voice_Interaction_Module SHALL delete raw audio data immediately after pattern extraction
+4. THE Voice_Interaction_Module SHALL process all voice data locally without external transmission
+5. THE Voice_Interaction_Module SHALL provide visual indicator when voice monitoring is active
+
+### Requirement 28: Caregiver Mobile App Push Notifications
+
+**User Story:** As a caregiver, I want push notifications on my mobile device with rich context, so that I can respond faster than SMS/IVR alone.
+
+#### Acceptance Criteria
+
+1. THE Caregiver_Mobile_App SHALL deliver Push_Notifications for escalations
+2. WHEN Push_Notification fails, THE Escalation_Agent SHALL fallback to SMS_Alert and IVR_Call
+3. THE Caregiver_Mobile_App SHALL display patient risk score, current patterns, and escalation reason
+4. THE Caregiver_Mobile_App SHALL allow one-tap acknowledgment of escalations
+5. THE Caregiver_Mobile_App SHALL maintain SMS/IVR as primary emergency channel (push is enhancement only)
+
+### Requirement 29: Mobile App Patient Status Dashboard
+
+**User Story:** As a nurse managing multiple patients, I want a mobile dashboard showing all patients with real-time status, so that I can prioritize my attention effectively.
+
+#### Acceptance Criteria
+
+1. THE Caregiver_Mobile_App SHALL display multi-patient view with risk-based prioritization
+2. THE Caregiver_Mobile_App SHALL show current Behavioral_Patterns and trends for each patient
+3. THE Caregiver_Mobile_App SHALL highlight active alerts and escalations
+4. WHEN patient status changes significantly, THE Caregiver_Mobile_App SHALL update display in real-time
+5. THE Caregiver_Mobile_App SHALL provide drill-down view for detailed patient history
+
+### Requirement 30: Mobile App Offline Operation
+
+**User Story:** As a caregiver in areas with poor connectivity, I want the mobile app to work offline and sync when connectivity returns, so that I can access patient information anytime.
+
+#### Acceptance Criteria
+
+1. THE Caregiver_Mobile_App SHALL operate offline with locally cached patient data
+2. WHEN connectivity is unavailable, THE Caregiver_Mobile_App SHALL queue acknowledgments for synchronization
+3. WHEN connectivity returns, THE Caregiver_Mobile_App SHALL synchronize queued data automatically
+4. THE Caregiver_Mobile_App SHALL indicate offline status clearly to user
+5. THE Caregiver_Mobile_App SHALL prioritize emergency data synchronization over routine updates
+
+### Requirement 31: Mobile App Alert History
+
+**User Story:** As a clinician, I want to review alert history and resolution tracking on mobile, so that I can understand patient trajectory and response patterns.
+
+#### Acceptance Criteria
+
+1. THE Caregiver_Mobile_App SHALL display complete alert history for each patient
+2. THE Caregiver_Mobile_App SHALL show resolution status and response times for each alert
+3. THE Caregiver_Mobile_App SHALL track which caregiver acknowledged each escalation
+4. THE Caregiver_Mobile_App SHALL provide filtering by alert type, date range, and severity
+5. THE Caregiver_Mobile_App SHALL display trend analysis of alert frequency over time
+
+### Requirement 32: Mobile App Security and Authentication
+
+**User Story:** As a healthcare administrator, I want secure mobile app access with role-based permissions, so that patient data remains protected on mobile devices.
+
+#### Acceptance Criteria
+
+1. THE Caregiver_Mobile_App SHALL require secure authentication (biometric or PIN)
+2. THE Caregiver_Mobile_App SHALL implement role-based access control (caregiver, clinician, nurse)
+3. THE Caregiver_Mobile_App SHALL encrypt all patient data stored locally
+4. THE Caregiver_Mobile_App SHALL use secure API communication with main system
+5. THE Caregiver_Mobile_App SHALL automatically lock after inactivity timeout
+
+### Requirement 33: Mobile App Low-Bandwidth Optimization
+
+**User Story:** As a caregiver in rural areas with limited cellular data, I want the mobile app to work efficiently on low-bandwidth connections, so that I can receive critical alerts without high data costs.
+
+#### Acceptance Criteria
+
+1. THE Caregiver_Mobile_App SHALL optimize data transfer for low-bandwidth networks
+2. THE Caregiver_Mobile_App SHALL prioritize critical alert data over non-essential updates
+3. THE Caregiver_Mobile_App SHALL compress data transmissions without losing critical information
+4. THE Caregiver_Mobile_App SHALL provide data usage statistics and controls
+5. THE Caregiver_Mobile_App SHALL operate efficiently on 2G/3G networks
+
+### Requirement 34: Predictive Analytics Integration with Pattern Analysis
+
+**User Story:** As a system architect, I want the Predictive Analytics Agent to work alongside the Pattern Analysis Agent seamlessly, so that both reactive and proactive monitoring operate together.
+
+#### Acceptance Criteria
+
+1. THE Predictive_Analytics_Agent SHALL receive same Pattern_Signals as Pattern_Analysis_Agent
+2. THE Predictive_Analytics_Agent SHALL generate risk trajectory predictions independently
+3. WHEN risk trajectory indicates future deterioration, THE Predictive_Analytics_Agent SHALL trigger proactive alerts
+4. THE Predictive_Analytics_Agent SHALL not interfere with real-time emergency escalations
+5. THE Predictive_Analytics_Agent SHALL log all predictions to Audit_Agent with explainable rationale
+
+### Requirement 35: Voice Interaction Integration with Observation
+
+**User Story:** As a system architect, I want voice interaction to extend the Observation Agent naturally, so that voice becomes another input source alongside camera/sensor/wearable data.
+
+#### Acceptance Criteria
+
+1. THE Voice_Interaction_Module SHALL integrate with Observation_Agent as additional input source
+2. THE Voice_Interaction_Module SHALL generate Pattern_Signals in same format as other sources
+3. THE Voice_Interaction_Module SHALL maintain privacy-preserving approach (no recording)
+4. THE Voice_Interaction_Module SHALL operate independently without affecting camera/sensor/wearable monitoring
+5. THE Pattern_Analysis_Agent SHALL integrate voice-based Pattern_Signals with other behavioral patterns
+
+### Requirement 36: Mobile App Integration with Escalation
+
+**User Story:** As a system architect, I want the mobile app to extend the Escalation Agent's communication channels, so that push notifications enhance but don't replace SMS/IVR emergency alerts.
+
+#### Acceptance Criteria
+
+1. THE Caregiver_Mobile_App SHALL integrate with Escalation_Agent as additional communication channel
+2. THE Escalation_Agent SHALL attempt Push_Notification before SMS_Alert for non-critical escalations
+3. THE Escalation_Agent SHALL use SMS_Alert and IVR_Call as primary channels for critical emergencies
+4. THE Escalation_Agent SHALL track acknowledgments from mobile app in escalation protocol
+5. THE Escalation_Agent SHALL maintain emergency-first principles (cellular over internet)
+
+## Success Metrics
+
+- Reduction in time to detect patient deterioration
+- Reduction in adverse events due to missed observation
+- Percentage of emergencies escalated within target time
+- False positive rate for emergency escalations
+- System uptime and reliability in offline conditions
+- Caregiver response time to escalations
+- Patient safety outcomes across hospital, home, and elderly care settings
+- **Predictive accuracy of deterioration forecasts (6-12 hour window)**
+- **Percentage of deteriorations predicted before they occur**
+- **Voice command recognition accuracy across all languages**
+- **Mobile app adoption rate among caregivers**
+- **Mobile app response time improvement vs SMS/IVR alone**
+- **Reduction in emergency escalations due to proactive intervention**
